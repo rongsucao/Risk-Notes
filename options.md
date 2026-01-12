@@ -8,7 +8,7 @@ Theorem 1 (Put Call Parity). $C+ K e ^(−rT) = P + S_0$
 Portfolio A: Call option + Zero Coupon Bond with fair value K  
 Portfolio B: Put option + Current Price of the underlying stock  
 
-Payoffs:
+Payoffs:  
 $$max(S_T, K)$$
 
 **3. **

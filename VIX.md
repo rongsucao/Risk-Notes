@@ -10,3 +10,6 @@ S&P 500 Index (SPX) options
 (3) Horizon  
 30-day forward-looking  
 
+Interpreting VIX Levels:  
+> VIX = 20 means the market expects SPX to move ±20% over one year (annualized)   
+

@@ -13,3 +13,6 @@ S&P 500 Index (SPX) options
 Interpreting VIX Levels:  
 > VIX = 20 means the market expects SPX to move ±20% over one year (annualized)   
 
+**Converting to Different Time Horizons:**  
+
+![alt text](image.png)

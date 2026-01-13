@@ -225,4 +225,33 @@ Now, we draw a straight line between the two Total Variances to find the value a
 Where the time-weights are:   
 <img width="275" height="56" alt="image" src="https://github.com/user-attachments/assets/47d61d65-fcb3-42a0-9926-59eaff599547" />  
 Interpretation: If $T_{30}$ is closer to $T_1$, then $w_1$ will be larger. If it is closer to $T_2$, $w_2$ will be larger.   
+  
+Step 2.3: Convert Back to Annualized Variance  
+Once we have the Total Variance for the 30-day period, we must convert it back to an annualized number.  
+<img width="213" height="57" alt="image" src="https://github.com/user-attachments/assets/60cc6ab8-87b2-4140-84a4-f9d2a76594d7" />  
 
+Step 2.4: Calculate VIX  
+Finally, take the square root to get volatility, and multiply by 100 to get the index value.  
+<img width="171" height="44" alt="image" src="https://github.com/user-attachments/assets/58aa9600-b6ad-4442-9589-c4d6ef4936af" />  
+
+
+>Step-by-Step Calculation:
+>Step 1: Convert to Total Variance Note: Time units must be consistent. Here, we use fractions of a year:  
+>$$T_1 = \frac{5}{365}, \quad T_2 = \frac{40}{365}, \quad T_{30} = \frac{30}{365}$$  
+>$$\text{Total Variance}_1 = \sigma_1^2 \times T_1 = 0.0324 \times \frac{5}{365} = 0.000444$$  
+>$$\text{Total Variance}_2 = \sigma_2^2 \times T_2 = 0.0484 \times \frac{40}{365} = 0.005305$$  
+>  
+>Step 2: Calculate Interpolation Weights  
+>$$w_1 = \frac{T_2 - T_{30}}{T_2 - T_1} = \frac{40 - 30}{40 - 5} = \frac{10}{35} = 0.286$$
+>$$w_2 = \frac{T_{30} - T_1}{T_2 - T_1} = \frac{30 - 5}{40 - 5} = \frac{25}{35} = 0.714$$
+>(Note: Since 30 days is closer to 40 days than to 5 days, $w_2$ is larger, giving more weight to the 40-day variance.)
+>
+>Step 3: Interpolate Total Variance  
+>$$\text{Total Variance}_{30} = 0.000444 \times 0.286 + 0.005305 \times 0.714$$
+>$$= 0.000127 + 0.003788 = \mathbf{0.003915}$$
+>  
+>Step 4: Convert to Annualized Variance  
+><img width="507" height="59" alt="image" src="https://github.com/user-attachments/assets/a1291190-c68e-4539-8103-1b51e030f281" />  
+>  
+>Step 5: Calculate VIX  
+>$$\text{VIX} = 100 \times \sqrt{0.0476} = 100 \times 0.218 = \mathbf{21.8}$$  

@@ -101,7 +101,11 @@ Where:
 |Component|Symbol|Meaning|  
 |--|--|--|  
 |Option price| $Q(K_i)$ | Price of the option. The higher the price of the option, the higher possibility market think stock could achive strick price, the greater the contribution.|  
-|Strike Spacing| $ΔK_i$ | Interval between strike prices. How wide this option in charge of the strike.|
+|Strike Spacing| $ΔK_i$ | Spacing. Represents how wide of a strike range this specific option is "responsible" for covering|
+|Weight|$1/K^2_i$|Adjustment Factor. Options with lower strikes are assigned a greater weight (inverse square weighting).|
+|Discounted Factor|$e^{rT}$|Interest Rate Adjustment. Usually very small and can typically be ignored.|  
+|Adjustment Term|$\frac{1}{T}\left(\frac{F}{K_0} - 1\right)^2$|Technical Adjustment Term. Corrects for the difference between the Forward price ($F$) and the cutoff strike ($K_0)$|
+
 
 **Calculate Variance Swap Fair Strike for a Single Expiry**  
 A variance swap can be replicated by a portfolio of options.  

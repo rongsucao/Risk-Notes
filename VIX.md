@@ -116,4 +116,7 @@ A variance swap can be replicated by a portfolio of options.
 Why low strike options have higher weights?  
 Answer: To make sure we have constant dollar gamma across all spot prices.  
 
+Volatility is about percentage returns, not absolute dollar moves.  
+A $10 move when the stock is at $100 is a huge volatility event (10%), but the same $10 move at $1000 is nothing (1%).  
+The $1/K^2$ weighting simply adjusts for this, giving more importance to the lower strikes because price changes down there represent much larger percentage swings.  
 

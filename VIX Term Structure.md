@@ -186,4 +186,43 @@ Meaning:
 > This number (0.000270) is the Variance Contribution of just that one 1200 Put option.  
 > To get the final VIX, you would calculate this for every strike (1225, 1250, 1275, etc.), add them all up, and then take the square root.  
 
+### **5. Interpolation to Exactly 30 Days.**  
+Problem:      
+The VIX definition is the 30-day expected variance. However, it is almost impossible to have an option chain that expires in exactly 30 days! From your data, there are 6 different expiry dates:    
+<img width="564" height="200" alt="image" src="https://github.com/user-attachments/assets/d25e5037-c1e3-4447-85c9-993f61937c33" />    
+Question: How do we get exactly 30 days of variance from this data?    
+Answer: Interpolation!   
+
+**The Critical Rule**  
+We interpolate variance, not volatility.  
+
+Why Variance, Not Volatility?  
+Mathematical Reason: Variance is Additive Over Time   
+$$\text{Var}(R_{t_1 + t_2}) = \text{Var}(R_{t_1}) + \text{Var}(R_{t_2})$$    
+This means:  
+$$\sigma^2_{T_1} \cdot T_1 + \sigma^2_{T_2} \cdot T_2 = \sigma^2_{T_1 + T_2} \cdot (T_1 + T_2)$$  
+Therefore, Total Variance ($= \sigma^2 \times T$) can be directly summed and interpolated.  
+Volatility Does NOT Scale Linearly!  
+$$\sigma_{T_1} + \sigma_{T_2} \neq \sigma_{T_1 + T_2} \quad \text{❌ WRONG!}$$  
+Volatility scales with the square root of time ($\sqrt{T}$), so it is not linear.   
+
+**The Interpolation Formula**  
+Scenario: Suppose we have the following data points:  
+Near-term expiry: $T_1$ days, with annualized variance $\sigma_1^2$.   
+Next-term expiry: $T_2$ days, with annualized variance $\sigma_2^2$.   
+Target: $T_{30} = 30$ days.   
+
+Step 2.1: Calculate Total Variance for Each Expiry  
+First, we must "un-annualize" the variance to find the total variance for the specific time period.  
+$$\text{Total Variance}_1 = \sigma_1^2 \times T_1$$  
+$$\text{Total Variance}_2 = \sigma_2^2 \times T_2$$   
+>Note: The value $\sigma^2$ we calculated in Step 1 was the annualized variance. However, since variance accumulates (adds up) over time, we must convert it into total variance (the actual variance expected over that specific number of days) before we can interpolate.
+
+  
+Step 2.2: Linear Interpolation in Total Variance  
+Now, we draw a straight line between the two Total Variances to find the value at 30 days.  
+<img width="566" height="34" alt="image" src="https://github.com/user-attachments/assets/46c8fb5e-1066-440f-b92b-d5ffa1282c46" />  
+Where the time-weights are:   
+<img width="275" height="56" alt="image" src="https://github.com/user-attachments/assets/47d61d65-fcb3-42a0-9926-59eaff599547" />  
+Interpretation: If $T_{30}$ is closer to $T_1$, then $w_1$ will be larger. If it is closer to $T_2$, $w_2$ will be larger.   
 

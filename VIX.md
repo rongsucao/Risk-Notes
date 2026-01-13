@@ -112,3 +112,8 @@ A variance swap can be replicated by a portfolio of options.
 > Variance Swap Fair Strike = Cost of replicating option portfolio.  
 > We can back out the market expected variance from option prices.
 
+**Intuition: Why $1/K^2$ Weighting**  
+Why low strike options have higher weights?  
+Answer: To make sure we have constant dollar gamma across all spot prices.  
+
+

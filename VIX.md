@@ -1,6 +1,8 @@
 **1. What is VIX**   
 Definition:    
 The VIX Index (CBOE Volatility Index) measures the market's expectation of 30-day implied volatility for the S&P 500 Index. It is calculated from a weighted strip of out-of-the-money (OTM) SPX options.    
+<img width="281" height="55" alt="image" src="https://github.com/user-attachments/assets/3d9cdbf1-2916-4d8c-9b57-ba12dfc8e8c0" />   
+
 
 Key Characteristics   
 (1) Unit  
@@ -32,19 +34,31 @@ Where:
 - F = Forward index level
 - $K_0$ = First strike below the forward price
 
-**Step-by-Step Calculation Process**  
-Step 1: Select Expiration Dates
-        → Use near-term and next-term SPX options (23-37 days to expiry)
+**Understanding the Data Structure**  
 
-Step 2: Identify OTM Options
-        → Puts with strikes below forward price
-        → Calls with strikes above forward price
+| Column    | Meaning | Example |
+| -------- | ------- |-------|
+| Date  | Valuation date   | 2001-06-11|
+| Option Expiry | Option expiration date     | Various dates|
+| Option Type    | Put/Call    | P or C|
+|Strike | Strike Price | 1100,1250, etc |
+|Option Price|Market price of option|Varies|
+|Forward| Forward Price| 1254.45|
+|Discount Rate|Risk-free Rate| Small Value|
+|Implied Volatility| Backed-out IV| 0.177|
+|Spot|Current Spot Price| 1254.39|   
 
-Step 3: Calculate Variance for Each Expiration
-        → Apply the 1/K² weighted formula
+**OTM option selection**  
+Suppose forward = 1254.45  
+For strikes < forward: we use OTM Put option.  
+For strikes > forward: we use OTM Call option.  
 
-Step 4: Interpolate to Exactly 30 Days
-        → Linear interpolation in VARIANCE (not volatility!)
+<img width="715" height="115" alt="image" src="https://github.com/user-attachments/assets/0b32d9e1-846c-42be-b4d8-648947991ce9" />
 
-Step 5: Take Square Root
-        → VIX = 100 × √(σ²_30d)
+**Why compare strike price with Forward Price?**  
+Key reason：options payoff happens in strike date instead of today.  
+When we ask, if this option is in the money or out of the money, the real question is :  
+> Where will the underlying be relative to the strike at maturity?  
+
+
+

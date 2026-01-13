@@ -96,5 +96,15 @@ Where:
 - $ΔK_i$ = Interval between strike prices
 - $Q(K_i)$ = Midpoint of bid-ask spread for oprion with strike $K_i$
 - F = Forward index level
-- $K_0$ = First strike below the forward price  
+- $K_0$ = First strike below the forward price
+
+|Component|Symbol|Meaning|  
+|--|--|--|  
+|Option price| $Q(K_i)$ | Price of the option. The higher the price of the option, the higher possibility market think stock could achive strick price, the greater the contribution.|  
+|Strike Spacing| $ΔK_i$ | Interval between strike prices. How wide this option in charge of the strike.|
+
+**Calculate Variance Swap Fair Strike for a Single Expiry**  
+A variance swap can be replicated by a portfolio of options.  
+> Variance Swap Fair Strike = Cost of replicating option portfolio.  
+> We can back out the market expected variance from option prices.
 

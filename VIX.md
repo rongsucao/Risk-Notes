@@ -169,5 +169,21 @@ Meaning:
 - Adjustment Term: Because the available strikes are discrete, the "ATM Strike" ($K_0$) is rarely exactly equal to the Forward Price ($F$). This term subtracts the small error caused by that difference.
 
 
+> The Worked Example (Explained)
+> This section walks through the math for one specific option to show how the formula works in practice.
+> Scenario:
+> Target: Option 1 (Strike $K = 1200$ Put).
+> Inputs:  
+> Spacing ($\Delta K$) = 25  
+> Price ($Q$) = 15.50  
+> Time ($T$) = 30 days  
+> Interest ($r$) = 1%  
+>The Calculation:It plugs these numbers into the Step 1.3 formula:  
+> 1.Weighting: $\frac{25}{1200^2}$ (The width divided by the squared strike).   
+> 2.Interest: $e^{rT}$ (A very small adjustment, close to 1).  
+> 3.Price: $15.50$.  
+> The Result: 0.000270  
+> This number (0.000270) is the Variance Contribution of just that one 1200 Put option.  
+> To get the final VIX, you would calculate this for every strike (1225, 1250, 1275, etc.), add them all up, and then take the square root.  
 
 

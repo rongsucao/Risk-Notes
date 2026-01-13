@@ -133,3 +133,41 @@ The Intuitive Summary:
 > Low Strikes ($K$ is small): The Log curve is extremely curved/steep at low numbers (e.g., the difference between $\ln(10)$ and $\ln(11)$ is much sharper than $\ln(1000)$ vs  $\ln(1001)$ ). Because the curve bends so much there, you need a massive weight ( $1/K^2$ ) of options to replicate that shape accurately.  
 > High Strikes ($K$ is large): The Log curve flattens out. Since it is almost a straight line already, you need very little weight to replicate it.  
 
+### **4.Step-by-Step Calculation**  
+**Step 1.1: Identify OTM Options**  
+Action: Select which options to include in the calculation.  
+Logic: Look at the Forward Price(F)  
+- if Strike < F: Use Put prices.
+- if Strike > F: Use Call prices.
+- At the center(near F): Use the averge of Put and Call prices.  
+Why?
+Because we only want OTM options because they are the most liquid and represent pure "volatility value".
+
+**Step 1.2: Calculate Strike Spacing ($\Delta K_i$)**  
+Action: Calculate the "width" of the strip that each option is responsible for.  
+Formula: $\Delta K_i = \frac{K_{i+1} - K_{i-1}}{2}$  
+Meaning:  
+- This is the equivalent of $dx$ in calculus.
+- If you are looking at Strike 1110, and the neighboring strikes are 1100 and 1120, the spacing is $\frac{1120 - 1100}{2} = 10$.
+- If strikes are far apart, $\Delta K$ is large; if they are close together, $\Delta K$ is small.
+
+**Step 1.3: Calculate Each Option's Contribution**  
+Action: Calculate how much "variance" a single strike contributes to the total.  
+Formula:   
+<img width="449" height="81" alt="image" src="https://github.com/user-attachments/assets/5804a66c-6106-4429-b72e-68270f245d66" />  
+Intuition: This calculates the area of the rectangle.  
+- Height: The Option Price $Q(K_i)$.
+- Width: The spacing $\Delta K_i$.
+- Weight: The $1/K^2$ factor we discussed earlier (giving more weight to lower strikes).
+
+**Step 1.4 & 1.5: Sum and Adjust**  
+Action: Add everything up to get the total variance.  
+Formula:  
+<img width="381" height="88" alt="image" src="https://github.com/user-attachments/assets/b579d712-a1c2-45ad-9e32-2249c336d427" />  
+Meaning:  
+- Sum: Add up the contribution from every single Put and Call.
+- Adjustment Term: Because the available strikes are discrete, the "ATM Strike" ($K_0$) is rarely exactly equal to the Forward Price ($F$). This term subtracts the small error caused by that difference.
+
+
+
+

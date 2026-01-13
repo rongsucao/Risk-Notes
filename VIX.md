@@ -1,4 +1,4 @@
-**1. What is VIX**   
+### **1. What is VIX**   
 Definition:    
 The VIX Index (CBOE Volatility Index) measures the market's expectation of 30-day implied volatility for the S&P 500 Index. It is calculated from a weighted strip of out-of-the-money (OTM) SPX options.    
 <img width="281" height="55" alt="image" src="https://github.com/user-attachments/assets/3d9cdbf1-2916-4d8c-9b57-ba12dfc8e8c0" />   
@@ -23,18 +23,7 @@ VIX = 16
 Expected monthly move: 16/3.46 ≈ 4.6%  
 Expected daily move = 16/16 = 1%  
 
-**2. VIX Calculation: The CBOE Methodology**   
-Formula:  
-<img width="404" height="63" alt="image" src="https://github.com/user-attachments/assets/007819b7-4507-4683-af47-7a68785524da" />  
-Where:  
-- T = Time to expiration(30 days/ 365)
-- $K_i$ = Strike price of the i-th OTM option
-- $ΔK_i$ = Interval between strike prices
-- $Q(K_i)$ = Midpoint of bid-ask spread for oprion with strike $K_i$
-- F = Forward index level
-- $K_0$ = First strike below the forward price
-
-**Understanding the Data Structure**  
+### **2. Understanding the Data Structure**  
 
 | Column    | Meaning | Example |
 | -------- | ------- |-------|
@@ -60,5 +49,52 @@ Key reason：options payoff happens in strike date instead of today.
 When we ask, if this option is in the money or out of the money, the real question is :  
 > Where will the underlying be relative to the strike at maturity?  
 
+Mathematical Explanation: Risk-Neutral Measure   
+Under black-scholes framework, the expected value of underlying price under the risk neutral measure is:  
+<img width="235" height="31" alt="image" src="https://github.com/user-attachments/assets/8711af11-c6b0-4a4a-8c17-a0accf4ca4fb" />  
+This is the forward price.  
+Therefore when we define OTM/ITM, we should use the market's best estimate of the practice at expiration, which is the Forward.  
+(In the risk-neutral world, all assets are expected to grow at the risk-free rate.)  
 
+**WHy does low-strike IV > high-strike IV?**  
+for example:  
+strike 1100: IV = 42.5%  
+strike 1250: IV = 17.7%  
+This phenomenon is called the Volatility Skew.  
+
+Why does the skew exist?  
+|Reason|Explanation|  
+|---|---|  
+|Crash Fear| Investors fear downside more than upside|  
+|Demand Imbalance| Heavy demand for OTM puts(portfolio protection)|  
+|Supply Constraints| Dealers charge premium for braring tail risk|  
+|Empirical Reality| Market crash fast, rally slow|    
+
+The volatility skew reflects the market's asymmetric fear. Investors are willing to pay more for protection against large downward moves than for upside exposure.  
+
+**Why does CBOE use only OTM options?**  
+There are 3 reasons for CBOE only use OTM options?  
+  
+Reason 1: OTM options provide purer volatility information.  
+> OTM Option Value = Pure Time Value = f(volatility, time)  
+> ITM Option Value = Intrinsic Value + Time Value  
+
+Reason 2: Put-Call Parity  
+ITM put option and OTM Call option contain the same volatility information.  
+<img width="251" height="51" alt="image" src="https://github.com/user-attachments/assets/0862dc41-789c-4252-91e6-3ec894777ccc" />  
+The difference is deterministic (no vol component), so using both would be redundant.  
+
+Reason 3: Better Liquidity  
+OTM options are more actively traded → more reliable prices → better VIX calculation.  
+
+### **3. VIX Calculation: The CBOE Methodology**   
+Formula:  
+<img width="404" height="63" alt="image" src="https://github.com/user-attachments/assets/007819b7-4507-4683-af47-7a68785524da" />  
+Where:  
+- T = Time to expiration(30 days/ 365)
+- $K_i$ = Strike price of the i-th OTM option
+- $ΔK_i$ = Interval between strike prices
+- $Q(K_i)$ = Midpoint of bid-ask spread for oprion with strike $K_i$
+- F = Forward index level
+- $K_0$ = First strike below the forward price  
 
